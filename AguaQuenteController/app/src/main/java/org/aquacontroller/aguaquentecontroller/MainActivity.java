@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.aquacontroller.aguaquentecontroller.application.Application;
+import org.aquacontroller.aguaquentecontroller.data.State;
 import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
 import org.aquacontroller.aguaquentecontroller.task.RequestStateTask;
 
@@ -36,6 +38,13 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener {
 		new RequestStateTask().execute();
 	    }
 	});
+	State state = State.readFromFile(this);
+	if (state == null) {
+	    Application.getInstance().schedule();
+	    state = new State();
+	    Toast.makeText(this, "FEELS LIKE THE FIRST TIME", Toast.LENGTH_LONG).show();
+	}
+	state.writeToFile(this);
     }
 
     @Override

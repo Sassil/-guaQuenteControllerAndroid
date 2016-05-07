@@ -52,7 +52,7 @@ public class TeaPotState {
 	}
     }
 
-    public static TeaPotState readFromServer() {
+    public synchronized static TeaPotState readFromServer() {
 	final String url = "http://localhost:8090";
 	HttpURLConnection urlConnection = null;
 	try {
