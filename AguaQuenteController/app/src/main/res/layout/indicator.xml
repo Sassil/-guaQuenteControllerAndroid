@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/indicator_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="Temperatura (Cº)"
+        android:textStyle="bold"
+        android:textSize="16dp"/>
+    <TextView
+        android:id="@+id/indicator_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|right"
+        android:layout_alignParentRight="true"
+        android:padding="5dp"
+        android:text="55"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/indicator_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicator_value"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/indicator_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicator_value"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical|right"
+        android:padding="5dp"
+        android:text="100"/>
+    <View
+        android:id="@+id/indicator_bar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/green_ok"
+        android:layout_below="@+id/indicator_max"/>
+</RelativeLayout>

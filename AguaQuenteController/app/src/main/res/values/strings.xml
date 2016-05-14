@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="request">Pedir</string>
+    <string name="temperature">Temperatura (Cº)</string>
+    <string name="volume">Volume (cL)</string>
 </resources>

@@ -8,23 +8,32 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.aquacontroller.aguaquentecontroller.application.Application;
+import org.aquacontroller.aguaquentecontroller.data.DataIndicator;
 import org.aquacontroller.aguaquentecontroller.data.State;
 import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
 import org.aquacontroller.aguaquentecontroller.task.RequestStateTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import static org.aquacontroller.aguaquentecontroller.data.TeaPotState.*;
 
-public class MainActivity extends AppCompatActivity implements TeaPotListener {
+public class MainActivity extends AppCompatActivity implements TeaPotListener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private Handler handler;
+    private ListView indicatorList;
+    private boolean init;
+    public static int LIST_WIDTH;
+    private IndicatorAdapter indicatorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener {
 	setContentView(R.layout.activity_main);
 	handler = new Handler(Looper.getMainLooper());
 	final View btRequest = findViewById(R.id.button_request_state);
+	indicatorList = (ListView) findViewById(R.id.indicators_list);
 	btRequest.setOnClickListener(new View.OnClickListener() {
 	    @Override
 	    public void onClick(View v) {
@@ -42,9 +52,12 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener {
 	if (state == null) {
 	    Application.getInstance().schedule();
 	    state = new State();
-	    Toast.makeText(this, "FEELS LIKE THE FIRST TIME", Toast.LENGTH_LONG).show();
 	}
 	state.writeToFile(this);
+	init = false;
+	indicatorList.getViewTreeObserver().addOnGlobalLayoutListener(this);
+	indicatorAdapter = new IndicatorAdapter(this);
+	indicatorList.setAdapter(indicatorAdapter);
     }
 
     @Override
@@ -82,15 +95,26 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener {
     }
 
     @Override
-    public void onTeaPotUpdate(final TeaPotState state) {
+    public void onTeaPotUpdate(final TeaPotState teaPotState) {
 	handler.post(new Runnable() {
 	    @Override
 	    public void run() {
-		if (state == null)
-		    Toast.makeText(MainActivity.this, "No data mi friendo", Toast.LENGTH_LONG).show();
+		final List<DataIndicator> indicators;
+		if (teaPotState == null)
+		    indicators = Collections.EMPTY_LIST;
 		else
-		    Toast.makeText(MainActivity.this, state.temperature + " " + state.volume, Toast.LENGTH_SHORT).show();
+		    indicators = teaPotState.toIndicators();
+		indicatorAdapter.setIndicators(indicators);
 	    }
 	});
+    }
+
+    @Override
+    public void onGlobalLayout() {
+	if (init)
+	    return;
+	init = true;
+	LIST_WIDTH = indicatorList.getWidth();
+	indicatorAdapter.notifyDataSetChanged();
     }
 }

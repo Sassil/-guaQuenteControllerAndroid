@@ -6,17 +6,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.aquacontroller.aguaquentecontroller.R;
 import org.aquacontroller.aguaquentecontroller.application.Application;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeaPotState {
     final static ObjectMapper objectMapper = new ObjectMapper();
     public static final int TIMEOUT_MILLIS = 60000;
+    private static final double TEMPERATURE_MIN = 0;
+    private static final double TEMPERATURE_MAX = 100;
+    private static final double VOLUME_MIN = 0;
+    private static final double VOLUME_MAX = 100;
 
     public interface TeaPotListener {
 	void onTeaPotUpdate(TeaPotState state);
@@ -31,6 +37,8 @@ public class TeaPotState {
     public double volume;
     @JsonProperty
     public boolean isOn;
+    @JsonProperty
+    public int numberOfCups;
 
     private void writeToFile(Context context) {
 	final File dir = context.getExternalFilesDir(null);
@@ -83,4 +91,25 @@ public class TeaPotState {
 	    return;
 	listener.onTeaPotUpdate(state);
     }
+
+    public List<DataIndicator> toIndicators() {
+	final List<DataIndicator> indicators = new ArrayList<>();
+	DataIndicator indicator;
+	// Temperature
+	indicator = new DataIndicator();
+	indicator.titleId = R.string.temperature;
+	indicator.min = TEMPERATURE_MIN;
+	indicator.max = TEMPERATURE_MAX;
+	indicator.value = temperature;
+	indicators.add(indicator);
+	// Volume
+	indicator = new DataIndicator();
+	indicator.titleId = R.string.volume;
+	indicator.min = VOLUME_MIN;
+	indicator.max = VOLUME_MAX;
+	indicator.value = volume;
+	indicators.add(indicator);
+	return indicators;
+    }
+
 }
