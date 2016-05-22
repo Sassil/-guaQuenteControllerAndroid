@@ -40,9 +40,10 @@ public class TeaPotState {
     @JsonProperty
     public int numberOfCups;
 
-    private void writeToFile(Context context) {
+    public void writeToFile(Context context) {
 	final File dir = context.getExternalFilesDir(null);
 	try {
+	    dir.mkdirs();
 	    objectMapper.writeValue(new File(dir, TEAPOT_DATA_FILE), this);
 	    update(this);
 	} catch (IOException e) {

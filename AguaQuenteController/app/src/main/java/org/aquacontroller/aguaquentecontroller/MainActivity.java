@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener, V
     private boolean init;
     public static int LIST_WIDTH;
     private IndicatorAdapter indicatorAdapter;
+    private TextView cupNumber;
+    private Button onOffButton;
+    private boolean onState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +47,19 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener, V
 	handler = new Handler(Looper.getMainLooper());
 	final View btRequest = findViewById(R.id.button_request_state);
 	indicatorList = (ListView) findViewById(R.id.indicators_list);
+	cupNumber = (TextView) findViewById(R.id.cup_number);
+	onOffButton = (Button) findViewById(R.id.button_on_off);
 	btRequest.setOnClickListener(new View.OnClickListener() {
 	    @Override
 	    public void onClick(View v) {
 		new RequestStateTask().execute();
+	    }
+	});
+	onOffButton.setOnClickListener(new View.OnClickListener() {
+	    @Override
+	    public void onClick(View v) {
+		//TODO Send request
+		updateOnOfButton(!onState);
 	    }
 	});
 	State state = State.readFromFile(this);
@@ -54,6 +68,13 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener, V
 	    state = new State();
 	}
 	state.writeToFile(this);
+
+	TeaPotState teaPotState = new TeaPotState();
+	teaPotState.volume = 25;
+	teaPotState.temperature = 100;
+	teaPotState.numberOfCups = 5;
+	teaPotState.writeToFile(this);
+
 	init = false;
 	indicatorList.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	indicatorAdapter = new IndicatorAdapter(this);
@@ -99,14 +120,32 @@ public class MainActivity extends AppCompatActivity implements TeaPotListener, V
 	handler.post(new Runnable() {
 	    @Override
 	    public void run() {
-		final List<DataIndicator> indicators;
-		if (teaPotState == null)
-		    indicators = Collections.EMPTY_LIST;
-		else
-		    indicators = teaPotState.toIndicators();
-		indicatorAdapter.setIndicators(indicators);
+		try {
+		    final List<DataIndicator> indicators;
+		    final int numberOfCups;
+		    final boolean isOn;
+		    if (teaPotState == null) {
+			indicators = Collections.EMPTY_LIST;
+			numberOfCups = 0;
+			isOn = false;
+		    } else {
+			indicators = teaPotState.toIndicators();
+			numberOfCups = teaPotState.numberOfCups;
+			isOn = teaPotState.isOn;
+		    }
+		    indicatorAdapter.setIndicators(indicators);
+		    cupNumber.setText(String.valueOf(numberOfCups));
+		    updateOnOfButton(isOn);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	    }
 	});
+    }
+
+    private void updateOnOfButton(boolean isOn) {
+	onState = isOn;
+	onOffButton.setText(getString(onState ? R.string.on : R.string.off));
     }
 
     @Override

@@ -21,6 +21,7 @@ public class State {
     public void writeToFile(Context context) {
 	final File dir = context.getExternalFilesDir(null);
 	try {
+	    dir.mkdirs();
 	    lastRun = new Date();
 	    objectMapper.writeValue(new File(dir, STATE_DATA_FILE), this);
 	} catch (IOException e) {

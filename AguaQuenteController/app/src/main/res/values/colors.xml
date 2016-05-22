@@ -4,4 +4,9 @@
     <color name="red_bad">#FFFF5555</color>
     <color name="orange_decent">#FFEE6611</color>
     <color name="yellow_medium">#FFFFBB11</color>
+    <color name="blue_button_pressed">#ff4488bb</color>
+    <color name="blue_button_hovered">#ff5599cc</color>
+    <color name="blue_button">#ff5599ee</color>
+    <color name="green_button">#ff559999</color>
+    <color name="green_button_pressed">#ff448888</color>
 </resources>

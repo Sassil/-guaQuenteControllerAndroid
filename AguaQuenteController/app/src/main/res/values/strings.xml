@@ -6,4 +6,6 @@
     <string name="request">Pedir</string>
     <string name="temperature">Temperatura (Cº)</string>
     <string name="volume">Volume (cL)</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 </resources>
