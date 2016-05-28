@@ -59,7 +59,7 @@ public class TeaPotState {
 	    return objectMapper.readValue(new File(dir, TEAPOT_DATA_FILE), new TypeReference<TeaPotState>() {});
 	} catch (IOException e) {
 	    e.printStackTrace();
-	    return null;
+	    return new TeaPotState();
 	}
     }
 

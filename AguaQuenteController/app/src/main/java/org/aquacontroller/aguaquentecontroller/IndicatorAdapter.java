@@ -80,6 +80,7 @@ public class IndicatorAdapter extends BaseAdapter {
     }
 
     @NonNull
+
     private String getValue(double value, DataIndicator indicator) {
 	if (indicator.isInteger)
 	    return String.valueOf((int) value);

@@ -1,10 +1,14 @@
 package org.aquacontroller.aguaquentecontroller;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.aquacontroller.aguaquentecontroller.application.Application;
@@ -29,8 +33,22 @@ public class MainActivity extends AppCompatActivity implements MainPageAdapter.M
 	    state = new State();
 	}
 	state.writeToFile(this);
+	//Toast.makeText(this, Application.getInstance().getDeviceToken() + "", Toast.LENGTH_LONG).show();
+	chooseOrientation();
+    }
 
-	Toast.makeText(this, Application.getInstance().getDeviceToken() + "", Toast.LENGTH_LONG).show();
+    private void chooseOrientation() {
+	// Set window fullscreen
+	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	final DisplayMetrics metrics = new DisplayMetrics();
+	getWindowManager().getDefaultDisplay().getMetrics(metrics);
+	// Test if it is in portrait mode by simply checking it's size
+	boolean isPortrait = (metrics.heightPixels >= metrics.widthPixels);
+	if (isPortrait) {
+	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	} else {
+	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	}
     }
 
     @Override

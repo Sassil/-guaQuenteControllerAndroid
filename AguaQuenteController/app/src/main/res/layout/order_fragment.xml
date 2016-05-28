@@ -15,7 +15,6 @@
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
         android:text="Reservar"
         android:background="@drawable/green_button_selector"
         android:textColor="#ffffffff"
