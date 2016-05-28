@@ -5,9 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainPageAdapter extends FragmentPagerAdapter {
-    private static final int NUM_PAGES = 2;
-    private static final int PAGE_INDICATOR = 0;
-    private static final int PAGE_ORDER = 1;
+    public static final int NUM_PAGES = 2;
+    public static final int PAGE_INDICATOR = 0;
+    public static final int PAGE_ORDER = 1;
+
+    public interface MainPageNavigator {
+	void goToPage(int page);
+    }
 
     public MainPageAdapter(FragmentManager fm) {
 	super(fm);

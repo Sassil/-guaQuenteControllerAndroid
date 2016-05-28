@@ -2,6 +2,7 @@ package org.aquacontroller.aguaquentecontroller;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,15 +70,27 @@ public class IndicatorAdapter extends BaseAdapter {
 	}
 	final DataIndicator indicator = indicatorList.get(position);
 	holder.title.setText(context.getString(indicator.titleId));
-	holder.value.setText(String.valueOf(indicator.value));
-	holder.min.setText(String.valueOf(indicator.min));
-	holder.max.setText(String.valueOf(indicator.max));
+	holder.value.setText(getValue(indicator.value, indicator));
+	holder.min.setText(getValue(indicator.min, indicator));
+	holder.min.setVisibility(indicator.showBounds ? View.VISIBLE : View.INVISIBLE);
+	holder.max.setText(getValue(indicator.max, indicator));
+	holder.max.setVisibility(indicator.showBounds ? View.VISIBLE : View.INVISIBLE);
 	setIndicatorBar(indicator, holder);
 	return convertView;
     }
 
+    @NonNull
+    private String getValue(double value, DataIndicator indicator) {
+	if (indicator.isInteger)
+	    return String.valueOf((int) value);
+	return String.valueOf(value);
+    }
+
     private void setIndicatorBar(DataIndicator indicator, ViewHolder holder) {
 	final double percentage;
+	holder.bar.setVisibility(indicator.showBounds ? View.VISIBLE : View.INVISIBLE);
+	if (!indicator.showBounds)
+	    return;
 	if (indicator.max == 0)
 	    percentage = 0;
 	else if (indicator.max < indicator.value - 1E-6)

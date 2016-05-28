@@ -8,4 +8,6 @@
     <string name="volume">Volume (cL)</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
+    <string name="ordered_cups">%d copos reservados</string>
+    <string name="cups">Copos</string>
 </resources>

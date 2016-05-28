@@ -12,7 +12,7 @@
     <Button
         android:id="@+id/button_order"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
@@ -54,7 +54,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/transparent_button_selector"/>
 
-    <TextView
+    <EditText
         android:id="@+id/cup_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,5 +68,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="1000"
-        android:textColor="#ff555599"/>
+        android:background="@color/transparent_white"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:textColor="#ff555599"
+        android:focusableInTouchMode="false"
+        android:focusable="false"/>
 </RelativeLayout>

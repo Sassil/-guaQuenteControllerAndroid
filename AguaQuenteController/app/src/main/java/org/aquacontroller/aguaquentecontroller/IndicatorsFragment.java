@@ -61,7 +61,7 @@ public class IndicatorsFragment extends Fragment implements TeaPotState.TeaPotLi
     @Override
     public void onPause() {
 	super.onPause();
-	TeaPotState.registerForUpdates(null);
+	TeaPotState.unregisterForUpdates(this);
     }
 
     @Override
@@ -77,15 +77,12 @@ public class IndicatorsFragment extends Fragment implements TeaPotState.TeaPotLi
 	    public void run() {
 		try {
 		    final List<DataIndicator> indicators;
-		    final int numberOfCups;
 		    final boolean isOn;
 		    if (teaPotState == null) {
 			indicators = Collections.EMPTY_LIST;
-			numberOfCups = 0;
 			isOn = false;
 		    } else {
 			indicators = teaPotState.toIndicators();
-			numberOfCups = teaPotState.numberOfCups;
 			isOn = teaPotState.isOn;
 		    }
 		    indicatorAdapter.setIndicators(indicators);

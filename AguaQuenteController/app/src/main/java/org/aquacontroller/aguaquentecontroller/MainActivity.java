@@ -11,15 +11,16 @@ import org.aquacontroller.aguaquentecontroller.application.Application;
 import org.aquacontroller.aguaquentecontroller.data.State;
 import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainPageAdapter.MainPageNavigator {
 
     private MainPageAdapter pageAdapter;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
-	final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+	pager = (ViewPager) findViewById(R.id.pager);
 	pageAdapter = new MainPageAdapter(getSupportFragmentManager());
 	pager.setAdapter(pageAdapter);
 	State state = State.readFromFile(this);
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
 	state.writeToFile(this);
 
 	Toast.makeText(this, Application.getInstance().getDeviceToken() + "", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	super.onRestoreInstanceState(savedInstanceState);
+	if (savedInstanceState != null)
+	    pager.setCurrentItem(0, false);
     }
 
     @Override
@@ -62,5 +70,15 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void goToPage(int page) {
+	try {
+	    if (pager != null)
+		pager.setCurrentItem(page, true);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 }

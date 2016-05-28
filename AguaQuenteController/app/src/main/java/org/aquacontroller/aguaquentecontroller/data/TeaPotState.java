@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TeaPotState {
     final static ObjectMapper objectMapper = new ObjectMapper();
@@ -28,7 +30,7 @@ public class TeaPotState {
 	void onTeaPotUpdate(TeaPotState state);
     }
 
-    private static TeaPotListener listener;
+    private static Set<TeaPotListener> listeners = new HashSet<>();
     public static final String TEAPOT_DATA_FILE = "teapot_data.txt";
 
     @JsonProperty
@@ -83,14 +85,33 @@ public class TeaPotState {
     }
 
     public static void registerForUpdates(TeaPotListener listener) {
-	TeaPotState.listener = listener;
+	if (listener == null)
+	    throw new IllegalArgumentException();
+	TeaPotState.listeners.add(listener);
 	update(readFromFile(Application.getInstance()));
     }
 
-    public static void update(TeaPotState state) {
+    public static void requestSingleUpdate(TeaPotListener listener) {
+	singleUpdate(readFromFile(Application.getInstance()), listener);
+    }
+
+    public static void unregisterForUpdates(TeaPotListener listener) {
 	if (listener == null)
+	    throw new IllegalArgumentException();
+	TeaPotState.listeners.remove(listener);
+    }
+
+    public static void update(TeaPotState state) {
+	if (listeners == null)
 	    return;
-	listener.onTeaPotUpdate(state);
+	for (TeaPotListener listener : listeners) {
+	    singleUpdate(state, listener);
+	}
+    }
+
+    private static void singleUpdate(TeaPotState state, TeaPotListener listener) {
+	if (listener != null)
+	    listener.onTeaPotUpdate(state);
     }
 
     public List<DataIndicator> toIndicators() {
@@ -102,6 +123,7 @@ public class TeaPotState {
 	indicator.min = TEMPERATURE_MIN;
 	indicator.max = TEMPERATURE_MAX;
 	indicator.value = temperature;
+	indicator.showBounds = true;
 	indicators.add(indicator);
 	// Volume
 	indicator = new DataIndicator();
@@ -109,6 +131,13 @@ public class TeaPotState {
 	indicator.min = VOLUME_MIN;
 	indicator.max = VOLUME_MAX;
 	indicator.value = volume;
+	indicator.showBounds = true;
+	indicators.add(indicator);
+	// Cups
+	indicator = new DataIndicator();
+	indicator.titleId = R.string.cups;
+	indicator.value = numberOfCups;
+	indicator.isInteger = true;
 	indicators.add(indicator);
 	return indicators;
     }
