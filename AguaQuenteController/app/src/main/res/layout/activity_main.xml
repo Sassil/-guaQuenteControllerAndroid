@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -8,72 +9,9 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_request_state"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/request"
-        android:background="@drawable/blue_button_selector"
-        android:textColor="#ffffffff"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        />
-
-    <Button
-        android:id="@+id/button_on_off"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/button_order"
-        android:background="@drawable/blue_button_selector"
-        android:textColor="#ffffffff"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        />
-
-    <Button
-        android:id="@+id/button_order"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:text="Reservar"
-        android:background="@drawable/green_button_selector"
-        android:textColor="#ffffffff"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        />
-
-    <ListView
-        android:id="@+id/indicators_list"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/button_request_state"
-        android:layout_margin="5dp">
-    </ListView>
-
-    <ImageView
-        android:id="@+id/cup_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/cup_number"
-        android:layout_below="@+id/indicators_list"
-        android:src="@drawable/cup_icon"
-        android:padding="20dp"
-        android:scaleType="centerInside"/>
-    <TextView
-        android:id="@+id/cup_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button_order"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/cups_text_size"
-        android:padding="0dp"
-        android:layout_marginBottom="10dp"
-        android:text="0"
-        android:textColor="#ff555599"/>
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>

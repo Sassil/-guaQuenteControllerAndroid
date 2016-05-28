@@ -9,4 +9,6 @@
     <color name="blue_button">#ff5599ee</color>
     <color name="green_button">#ff559999</color>
     <color name="green_button_pressed">#ff448888</color>
+    <color name="transparent_white">#00ffffff</color>
+    <color name="transparent_black">#80000000</color>
 </resources>

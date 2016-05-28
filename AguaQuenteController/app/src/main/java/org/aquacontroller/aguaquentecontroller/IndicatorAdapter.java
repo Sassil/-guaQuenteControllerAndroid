@@ -85,7 +85,7 @@ public class IndicatorAdapter extends BaseAdapter {
 	else
 	    percentage = indicator.value / indicator.max;
 	final ViewGroup.LayoutParams layoutParams = holder.bar.getLayoutParams();
-	layoutParams.width = (int) (MainActivity.LIST_WIDTH * percentage);
+	layoutParams.width = (int) (IndicatorsFragment.LIST_WIDTH * percentage);
 	holder.bar.setLayoutParams(layoutParams);
 	holder.bar.setBackgroundColor(getBarColor(percentage));
     }
