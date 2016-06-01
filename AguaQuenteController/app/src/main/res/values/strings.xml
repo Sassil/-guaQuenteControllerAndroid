@@ -10,4 +10,8 @@
     <string name="off">OFF</string>
     <string name="ordered_cups">%d copos pedidos</string>
     <string name="cups">Copos</string>
+    <string name="error_turning_on">Erro a ligar cafeteira</string>
+    <string name="error_reserving">Erro a reservar copos</string>
+    <string name="error_cancelling">Erro a cancelar</string>
+    <string name="cancel_requested">A cancelar....</string>
 </resources>

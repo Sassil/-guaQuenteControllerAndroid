@@ -15,6 +15,7 @@ import android.widget.ListView;
 import org.aquacontroller.aguaquentecontroller.data.DataIndicator;
 import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
 import org.aquacontroller.aguaquentecontroller.task.RequestStateTask;
+import org.aquacontroller.aguaquentecontroller.task.TurnOnTask;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,8 +47,7 @@ public class IndicatorsFragment extends Fragment implements TeaPotState.TeaPotLi
 	onOffButton.setOnClickListener(new View.OnClickListener() {
 	    @Override
 	    public void onClick(View v) {
-		//TODO Send request
-		updateOnOfButton(!onState);
+		new TurnOnTask().execute();
 	    }
 	});
 	final Activity context = getActivity();

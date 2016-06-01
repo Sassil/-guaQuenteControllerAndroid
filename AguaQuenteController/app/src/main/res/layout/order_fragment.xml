@@ -8,15 +8,27 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/button_order"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/button_cancel"
         android:text="Reservar"
         android:background="@drawable/green_button_selector"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginRight="10dp"
+        />
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="130dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Cancelar"
+        android:background="@drawable/red_button_selector"
         android:textColor="#ffffffff"
         android:textStyle="bold"
         android:textSize="20sp"

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import org.aquacontroller.aguaquentecontroller.MainPageAdapter.MainPageNavigator;
 import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
+import org.aquacontroller.aguaquentecontroller.task.CancelTask;
+import org.aquacontroller.aguaquentecontroller.task.ReserveTask;
 
 public class OrderFragment extends Fragment implements TeaPotState.TeaPotListener {
 
@@ -25,12 +27,14 @@ public class OrderFragment extends Fragment implements TeaPotState.TeaPotListene
     private int numberOfCups;
     private View orderMinus;
     private View orderPlus;
+    private View cancelButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	final View view = inflater.inflate(R.layout.order_fragment, container, false);
 	cupNumber = (TextView) view.findViewById(R.id.cup_number);
 	orderButton = view.findViewById(R.id.button_order);
+	cancelButton = view.findViewById(R.id.button_cancel);
 	orderPlus = view.findViewById(R.id.button_order_plus);
 	orderMinus = view.findViewById(R.id.button_order_minus);
 	final FragmentActivity activity = getActivity();
@@ -52,6 +56,16 @@ public class OrderFragment extends Fragment implements TeaPotState.TeaPotListene
     }
 
     private void initOrderButtons() {
+	cancelButton.setOnClickListener(new View.OnClickListener() {
+	    @Override
+	    public void onClick(View v) {
+		if (pageNavigator != null)
+		    pageNavigator.goToPage(MainPageAdapter.PAGE_INDICATOR);
+		final Context context = getActivity();
+		Toast.makeText(context, context.getString(R.string.cancel_requested, numberOfCups), Toast.LENGTH_LONG).show();
+		new CancelTask().execute();
+	    }
+	});
 	orderButton.setOnClickListener(new View.OnClickListener() {
 	    @Override
 	    public void onClick(View v) {
@@ -59,6 +73,7 @@ public class OrderFragment extends Fragment implements TeaPotState.TeaPotListene
 		    pageNavigator.goToPage(MainPageAdapter.PAGE_INDICATOR);
 		final Context context = getActivity();
 		Toast.makeText(context, context.getString(R.string.ordered_cups, numberOfCups), Toast.LENGTH_LONG).show();
+		new ReserveTask().execute(numberOfCups);
 	    }
 	});
 	orderPlus.setOnClickListener(new View.OnClickListener() {

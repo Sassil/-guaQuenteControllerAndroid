@@ -25,6 +25,7 @@ public class TeaPotState {
     private static final double TEMPERATURE_MAX = 100;
     private static final double VOLUME_MIN = 0;
     private static final double VOLUME_MAX = 100;
+    public static final String SERVER_URL = "http://localhost:8090";
 
     public interface TeaPotListener {
 	void onTeaPotUpdate(TeaPotState state);
@@ -56,7 +57,8 @@ public class TeaPotState {
     private static TeaPotState readFromFile(Context context) {
 	final File dir = context.getExternalFilesDir(null);
 	try {
-	    return objectMapper.readValue(new File(dir, TEAPOT_DATA_FILE), new TypeReference<TeaPotState>() {});
+	    return objectMapper.readValue(new File(dir, TEAPOT_DATA_FILE), new TypeReference<TeaPotState>() {
+	    });
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    return new TeaPotState();
@@ -64,7 +66,7 @@ public class TeaPotState {
     }
 
     public synchronized static TeaPotState readFromServer() {
-	final String url = "http://localhost:8090";
+	final String url = SERVER_URL + "/api/update/";
 	HttpURLConnection urlConnection = null;
 	try {
 	    urlConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -72,7 +74,8 @@ public class TeaPotState {
 	    urlConnection.setRequestProperty("Accept", "application/json");
 	    urlConnection.setConnectTimeout(TIMEOUT_MILLIS);
 	    final TeaPotState state;
-	    state = objectMapper.readValue(urlConnection.getInputStream(), new TypeReference<TeaPotState>() {});
+	    state = objectMapper.readValue(urlConnection.getInputStream(), new TypeReference<TeaPotState>() {
+	    });
 	    state.writeToFile(Application.getInstance());
 	    return state;
 	} catch (Exception e) {
