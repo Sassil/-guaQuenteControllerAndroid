@@ -28,7 +28,7 @@ public class Application extends android.app.Application {
 	alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	final Intent intent = new Intent(this, AlarmReceiver.class);
 	alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-	alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 0, 60 * 1000, alarmIntent);
+	alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 0, 15 * 1000, alarmIntent);
     }
 
     public String getDeviceToken() {
