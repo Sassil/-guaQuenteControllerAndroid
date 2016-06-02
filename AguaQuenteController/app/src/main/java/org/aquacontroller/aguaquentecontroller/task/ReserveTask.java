@@ -20,7 +20,7 @@ public class ReserveTask extends AsyncTask<Integer, Void, Boolean> {
         if (params == null || params.length < 1)
             return false;
         final String id = URLEncoder.encode(Application.getInstance().getDeviceToken());
-        final String serviceURL = String.format("/api/reserve/%s/%d/", id, params[0]);
+        final String serviceURL = String.format("/api/reserve/%s/%d/",id, params[0]);
         final String url = SERVER_URL + serviceURL;
         HttpURLConnection urlConnection = null;
         try {

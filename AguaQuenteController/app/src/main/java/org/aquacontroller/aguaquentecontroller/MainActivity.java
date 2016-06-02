@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import org.aquacontroller.aguaquentecontroller.application.Application;
 import org.aquacontroller.aguaquentecontroller.data.State;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements MainPageAdapter.M
 
     private MainPageAdapter pageAdapter;
     private ViewPager pager;
+    Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements MainPageAdapter.M
 	state.writeToFile(this);
 	//Toast.makeText(this, Application.getInstance().getDeviceToken() + "", Toast.LENGTH_LONG).show();
 	chooseOrientation();
+
+	timer.schedule(new Hello(), 0, 2000);
     }
 
     private void chooseOrientation() {
@@ -99,4 +105,7 @@ public class MainActivity extends AppCompatActivity implements MainPageAdapter.M
 	    e.printStackTrace();
 	}
     }
+
+
+
 }

@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.aquacontroller.aguaquentecontroller.data.DataIndicator;
+import org.aquacontroller.aguaquentecontroller.data.TeaPotState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,14 @@ public class IndicatorAdapter extends BaseAdapter {
     private String getValue(double value, DataIndicator indicator) {
 	if (indicator.isInteger)
 	    return String.valueOf((int) value);
-	return String.valueOf(value);
+	String onOff;
+	if(indicator.text_value==true){
+	    onOff="on";
+
+	}else{
+	    onOff="off";
+	}
+	return String.valueOf(onOff);
     }
 
     private void setIndicatorBar(DataIndicator indicator, ViewHolder holder) {

@@ -7,4 +7,5 @@ public class DataIndicator {
     public double value;
     public boolean showBounds;
     public boolean isInteger;
+    public boolean text_value;
 }

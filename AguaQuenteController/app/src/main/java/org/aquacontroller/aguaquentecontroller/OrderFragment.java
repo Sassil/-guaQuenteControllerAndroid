@@ -33,6 +33,7 @@ public class OrderFragment extends Fragment implements TeaPotState.TeaPotListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	final View view = inflater.inflate(R.layout.order_fragment, container, false);
 	cupNumber = (TextView) view.findViewById(R.id.cup_number);
+
 	orderButton = view.findViewById(R.id.button_order);
 	cancelButton = view.findViewById(R.id.button_cancel);
 	orderPlus = view.findViewById(R.id.button_order_plus);

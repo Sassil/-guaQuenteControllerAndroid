@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="request">Pedir</string>
     <string name="temperature">Temperatura (Cº)</string>
-    <string name="volume">Volume (cL)</string>
+    <string name="volume">Volume (mL)</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="ordered_cups">%d copos pedidos</string>
@@ -14,4 +14,5 @@
     <string name="error_reserving">Erro a reservar copos</string>
     <string name="error_cancelling">Erro a cancelar</string>
     <string name="cancel_requested">A cancelar....</string>
+    <string name="status_on_off">Estado</string>
 </resources>

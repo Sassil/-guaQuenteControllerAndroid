@@ -19,7 +19,7 @@ public class TurnOnTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        final String url = SERVER_URL + "/api/turnOn/";
+        final String url = SERVER_URL + "/api/turnON/";
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -30,6 +30,8 @@ public class TurnOnTask extends AsyncTask<Void, Void, Boolean> {
             return urlConnection.getResponseCode() == 200;
         } catch (Exception e) {
             e.printStackTrace();
+           System.out.println(e.getMessage());
+
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();

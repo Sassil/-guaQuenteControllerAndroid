@@ -17,15 +17,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.net.URLEncoder;
 
 public class TeaPotState {
     final static ObjectMapper objectMapper = new ObjectMapper();
-    public static final int TIMEOUT_MILLIS = 30000;
+    public static final int TIMEOUT_MILLIS = 4000;
     private static final double TEMPERATURE_MIN = 0;
     private static final double TEMPERATURE_MAX = 100;
     private static final double VOLUME_MIN = 0;
-    private static final double VOLUME_MAX = 100;
-    public static final String SERVER_URL = "http://localhost:8090";
+    private static final double VOLUME_MAX = 1000;
+    public static final String SERVER_URL = "http://192.168.10.89:5080";
 
     public interface TeaPotListener {
 	void onTeaPotUpdate(TeaPotState state);
@@ -66,7 +67,8 @@ public class TeaPotState {
     }
 
     public synchronized static TeaPotState readFromServer() {
-	final String url = SERVER_URL + "/api/update/";
+	String id=URLEncoder.encode(Application.getInstance().getDeviceToken());
+	final String url = SERVER_URL + "/api/update/id/"+id+"/";
 	HttpURLConnection urlConnection = null;
 	try {
 	    urlConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -120,6 +122,7 @@ public class TeaPotState {
     public List<DataIndicator> toIndicators() {
 	final List<DataIndicator> indicators = new ArrayList<>();
 	DataIndicator indicator;
+	DataIndicator indicator2;
 	// Temperature
 	indicator = new DataIndicator();
 	indicator.titleId = R.string.temperature;
@@ -127,6 +130,7 @@ public class TeaPotState {
 	indicator.max = TEMPERATURE_MAX;
 	indicator.value = temperature;
 	indicator.showBounds = true;
+	indicator.isInteger=true;
 	indicators.add(indicator);
 	// Volume
 	indicator = new DataIndicator();
@@ -135,13 +139,25 @@ public class TeaPotState {
 	indicator.max = VOLUME_MAX;
 	indicator.value = volume;
 	indicator.showBounds = true;
+	indicator.isInteger=true;
 	indicators.add(indicator);
 	// Cups
 	indicator = new DataIndicator();
 	indicator.titleId = R.string.cups;
 	indicator.value = numberOfCups;
+
 	indicator.isInteger = true;
 	indicators.add(indicator);
+	//on_off
+	indicator = new DataIndicator();
+	indicator.titleId = R.string.status_on_off;
+	indicator.isInteger = false;
+	indicator.text_value=this.isOn;
+
+	indicators.add(indicator);
+
+
+
 	return indicators;
     }
 
