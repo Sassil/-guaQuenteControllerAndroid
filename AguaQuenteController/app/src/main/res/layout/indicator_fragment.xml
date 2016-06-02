@@ -14,7 +14,7 @@
         android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/request"
+        android:text="Actualizar"
         android:background="@drawable/green_button_selector"
         android:textColor="#ffffffff"
         android:textStyle="bold"

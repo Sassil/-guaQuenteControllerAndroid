@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class TeaPotState {
     final static ObjectMapper objectMapper = new ObjectMapper();
-    public static final int TIMEOUT_MILLIS = 60000;
+    public static final int TIMEOUT_MILLIS = 30000;
     private static final double TEMPERATURE_MIN = 0;
     private static final double TEMPERATURE_MAX = 100;
     private static final double VOLUME_MIN = 0;
